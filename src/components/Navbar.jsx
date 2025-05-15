@@ -21,10 +21,10 @@ const Navbar = () => {
       } [&_*]:text-inherit`}
     >
       {/* Logo */}
-      <Link to="/" className="flex items-center space-x-2 md:space-x-3">
-        <img src={img} alt="logo" className="w-12 md:w-15" />
-        <div className="text-lg md:text-2xl font-semibold text-transparent bg-clip-text bg-gradient-to-br from-gray-900 via-purple-900 to-indigo-800 leading-tight">
-          Anasol Consultancy Services
+      <Link to="/" className="flex  items-center space-x-2 md:space-x-3">
+        <img src={img} alt="logo" className="w-12 md:w-20" />
+        <div className="text-lg md:text-xl font-semibold text-transparent bg-clip-text bg-gradient-to-br from-gray-900 via-purple-900 to-indigo-800 leading-tight">
+          Anasol <br /> Consultancy <br /> Services
           <p className="text-black text-xs md:text-sm">Since 2016</p>
         </div>
       </Link>
@@ -48,7 +48,7 @@ const Navbar = () => {
         </li>
         <li>
           <Link to="/carrers" className="hover:text-blue-600 cursor-pointer">
-            Carrers
+            Careers
           </Link>
         </li>
         <li>
@@ -69,19 +69,51 @@ const Navbar = () => {
 
         {/* Dropdown Menu */}
         {isDropdownOpen && (
-          <ul className="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg text-[#0f172a] text-lg font-medium">
-            <li className="hover:bg-gray-200 px-4 py-2 cursor-pointer">Home</li>
-            <li className="hover:bg-gray-200 px-4 py-2 cursor-pointer">
-              About
+          <ul className="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg text-black text-lg font-medium">
+            <li className="hover:bg-gray-200 px-4 py-2 cursor-pointer !text-black">
+              <Link
+                to="/"
+                onClick={() => setIsDropdownOpen(false)}
+                className="hover:text-blue-600 cursor-pointer !text-black"
+              >
+                Home
+              </Link>
             </li>
-            <li className="hover:bg-gray-200 px-4 py-2 cursor-pointer">
-              Services
+            <li className="hover:bg-gray-200 px-4 py-2 cursor-pointer !text-black">
+              <Link
+                to="/about"
+                onClick={() => setIsDropdownOpen(false)}
+                className="hover:text-blue-600 cursor-pointer !text-black"
+              >
+                About
+              </Link>
             </li>
-            <li className="hover:bg-gray-200 px-4 py-2 cursor-pointer">
-              Careers
+            <li className="hover:bg-gray-200 px-4 py-2 cursor-pointer !text-black">
+              <Link
+                to="/services"
+                onClick={() => setIsDropdownOpen(false)}
+                className="hover:text-blue-600 cursor-pointer !text-black"
+              >
+                Services
+              </Link>
             </li>
-            <li className="hover:bg-gray-200 px-4 py-2 cursor-pointer">
-              Contact
+            <li className="hover:bg-gray-200 px-4 py-2 cursor-pointer !text-black">
+              <Link
+                to="/carrers"
+                onClick={() => setIsDropdownOpen(false)}
+                className="hover:text-blue-600 cursor-pointer"
+              >
+                Careers
+              </Link>
+            </li>
+            <li className="hover:bg-gray-200 px-4 py-2 cursor-pointer !text-black">
+              <Link
+                to="/contact"
+                onClick={() => setIsDropdownOpen(false)}
+                className="hover:text-blue-600 cursor-pointer"
+              >
+                Contact
+              </Link>
             </li>
           </ul>
         )}

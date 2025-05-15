@@ -6,20 +6,44 @@ import logo from "../assets/Logo1.png";
 import { motion } from "framer-motion";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { ServiceData } from "./ServiceData";
-const fadeVariant = (direction) => ({
-  hidden: {
-    opacity: 0,
-    x: direction === "left" ? -200 : 200,
-  },
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: {
-      duration: 0.8,
-      ease: "easeOut",
+const fadeVariant = (direction) => {
+  const isMobile = window.innerWidth < 640;
+
+  if (isMobile) {
+    return {
+      hidden: {
+        opacity: 0,
+        scale: 0.8,
+      },
+      visible: {
+        opacity: 1,
+        scale: 1,
+        transition: {
+          duration: 0.6,
+          ease: "easeOut",
+        },
+      },
+    };
+  }
+
+  const offset = 200;
+  return {
+    hidden: {
+      opacity: 0,
+      x: direction === "left" ? -offset : offset,
     },
-  },
-});
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        duration: 0.8,
+        ease: "easeOut",
+      },
+    },
+  };
+};
+
+
 
 const useScrollAnimation = (dep) => {
   const ref = useRef();
@@ -186,21 +210,18 @@ const ServiceComponent = () => {
           </div>
         </div>
       </div>
+      <div>
 
-      <div className="flex justify-center p-19 pt-10 font-['Syne',_sans-serif] bg-white">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-11 p-5">
-          <div className="lg:col-span-2">
+      </div>
+
+      <div className="flex justify-center sm:p-15 lg:p-19 pt-10 font-['Syne',_sans-serif] bg-white">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-11 p-6">
+          <div className="lg:col-span-2 order-2 lg:order-1">
             {/* Title and Description */}
             <AnimatedBlock>
-              <h1
-                style={{
-                  fontSize: "4.5rem",
-                  fontWeight: "bold",
-                  marginBottom: "0.5rem",
-                  textAlign: "center",
-                  wordWrap: "break-word",
-                }}
-              >
+            <h1
+              className="text-5xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 text-center break-words"
+            >
                 {service.title.split(" ").map((word, wordIndex) => (
                   <span key={wordIndex} style={{ whiteSpace: "nowrap" }}>
                     {word.split("").map((char, i) => (
@@ -312,7 +333,7 @@ const ServiceComponent = () => {
           </div>
 
           {/* Services List & Help */}
-          <div className="space-y-6 mt-4">
+          <div className="space-y-6 mt-4 order-1 lg:order-2">
             <AnimatedBlock>
               <div className="border rounded-lg overflow-hidden shadow-sm border-gray-200">
                 <div className="border-b px-4 py-3 font-semibold bg-white text-lg text-black border-gray-200">
@@ -343,7 +364,7 @@ const ServiceComponent = () => {
             </AnimatedBlock>
 
             <AnimatedBlock>
-              <div className="relative rounded-lg overflow-hidden shadow-sm h-[400px] w-full">
+              <div className="hidden lg:block relative rounded-lg overflow-hidden shadow-sm h-[400px] w-full">
                 {/* Background Image */}
                 <div
                   className="absolute inset-0 bg-cover bg-center"
@@ -405,6 +426,7 @@ const ServiceComponent = () => {
           </div>
         </div>
       </div>
+      
       <div className="bg-white pb-30 px-4 md:px-20">
         <AnimatedBlock>
           <div className="text-center mb-15 flex justify-center">
@@ -429,13 +451,13 @@ const ServiceComponent = () => {
               <img
                 src={service.image}
                 alt={service.title}
-                className="w-40 h-40 rounded-full object-cover shadow-md border-5 border-gray-100 bg-white"
+                className="w-20 h-20  sm:w-25 sm:h-25 md:w-28 md:h-28 lg:w-40 lg:h-40 rounded-full object-cover shadow-md border-5 border-gray-100 bg-white"
               />
               <div className="mt-4">
-                <h3 className="text-2xl font-bold text-orange-600">
+                <h3 className="md:text-2xl lg:text-2xl font-bold text-orange-600">
                   {service.title}:
                 </h3>
-                <p className="text-md text-gray-700 max-w-xl">
+                <p className="xs:text-sm text-md text-gray-700 max-w-xl">
                   {service.description}
                 </p>
               </div>
@@ -443,6 +465,58 @@ const ServiceComponent = () => {
           ))}
         </div>
       </div>
+
+      <AnimatedBlock>
+              <div className="mx-5 md:mx-35 mb-10 lg:hidden relative rounded-lg overflow-hidden shadow-sm md:h-[400px] md:w-[500px]">
+                {/* Background Image */}
+                <div
+                  className="absolute inset-0 bg-cover bg-center"
+                  style={{
+                    backgroundImage:
+                      "url('https://images.unsplash.com/photo-1665686308827-eb62e4f6604d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
+                  }}
+                />
+                {/* Overlay */}
+                <div className="absolute inset-0 bg-blue-900 opacity-60"></div>
+
+                {/* Content Layer */}
+                <div className="relative z-10 flex flex-col justify-between  p-6 text-white">
+                  {/* Top Right Logo */}
+                  <div className="absolute top-8">
+                    <img src={logo} alt="Logo" className="w-15 h-15" />
+                  </div>
+
+                  {/* Bottom Content */}
+                  <div className="flex flex-col justify-end h-full mt-25">
+                    <h3 className="text-2xl font-bold mb-1">Need help?</h3>
+                    <h4 className="text-2xl font-bold mb-2">
+                      Feel free contact us
+                    </h4>
+                    <p className="text-sm text-gray-100 mb-6 max-w-sm">
+                      Our mission is to empowers businesses off all size in an
+                      businesses.
+                    </p>
+
+                    {/* Button and Arrow Wrapper */}
+
+                    <div className="mt-5">
+                    <Link to="/contact">
+                      <button className="flex items-center gap-2 bg-white text-blue-900 font-semibold py-2 px-4 rounded-full text-sm shadow transition duration-300 hover:bg-blue-600 hover:text-white">
+                        Get in touch
+                        <ArrowRight size={18} />
+                      </button>
+                    </Link>
+                  </div>
+
+
+
+                  </div>
+                </div>
+              </div>
+            </AnimatedBlock>
+
+
+
     </div>
   );
 };

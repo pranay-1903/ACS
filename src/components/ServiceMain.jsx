@@ -135,17 +135,19 @@ const ServiceMain = () => {
             Services
           </h1>
           <div
-            className={`px-6 py-2 rounded-full text-lg font-medium transition-opacity duration-2000 ${
+            className={`px-6 py-2 rounded-full text-lg font-medium transition-opacity duration-2000 bg-[rgba(255,255,255,0.1)] backdrop-blur-sm ${
               isVisible ? "opacity-100" : "opacity-0"
             }`}
           >
-            <span>Home</span> <span className="mx-2">/</span>{" "}
+            <Link to="/">
+              <span>Home</span>
+            </Link>           <span className="mx-2">/</span>{" "}
             <span className="font-['Syne',_sans-serif]">Services</span>
           </div>
         </div>
       </div>
 
-      <div className="bg-black to-indigo-800 min-h-screen px-4 py-15 flex justify-center">
+      <div className=" bg-gray-200 lg:bg-black to-indigo-800 min-h-screen px-4 py-15 flex justify-center">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl gap-7 py-5">
           {serviceData.map((item, index) => (
             <AnimatedBlock
@@ -180,84 +182,90 @@ const ServiceMain = () => {
           Why Choose Us
         </h1>
       </div>
-
       <div className="font-sans min-h-screen bg-black">
         {/* About Us Content */}
-        <div className="relative min-h-screen flex items-center justify-center">
-          <div className="flex flex-col md:flex-row w-full max-w-6xl">
-            {/* Text Section - LEFT SIDE */}
-            <div className="w-full md:w-1/2 py-20 flex flex-col font-['Syne',_sans-serif] text-white pr-10">
-              <button className=" border border-white w-fit p-2 rounded-2xl ml-5 ">
-                <p className="text-white ">WHY CHOOSE US</p>
-              </button>
-              <h1 className="text-4xl p-5 font-semibold leading-tight">
-                <span>Your Goals. Our Expertise. </span>
-                <br />
-                <span>One Mission</span>
-              </h1>
+        <div className="relative h-fit flex items-center justify-center">
+          {/* Main container */}
+          <div className="w-full max-w-6xl flex flex-col md:flex-row">
+            {/* Left side for md+: Image */}
 
-              <p className="p-5 text-lg max-w-2xl leading-relaxed">
-                Professionals of the industry with an abundance of knowledge and
-                expertise make up our team. We customize our services to fit
-                your specific business goals. We prioritize quality in every
-                project, ensuring optimal results for our clients. Your success
-                is our mission, and we work collaboratively to achieve your
-                goals.
-              </p>
+            {/* Right side for md+: Text */}
+            <div className="md:w-auto py-20 flex flex-col font-['Syne',_sans-serif] text-white">
+              {/* Wrapper for About button + Heading */}
+              <div className="flex flex-col px-6 md:px-30">
+                <button>
+                  <span className="text-white border border-white py-2 px-4 rounded-2xl lg:ml-50">
+                    Why Choose Us
+                  </span>
+                </button>
 
-              <div className="p-5 flex justify-between">
-                <div className="flex items-center gap-2">
-                  <IoSettingsOutline size={40} />
+                <h1 className="text-2xl pt-5 md:ml-20 md:text-3xl lg:text-4xl lg:ml-130 font-semibold leading-tight whitespace-nowrap">
+                  <span>Your Goals. Our Expertise. </span>
+                  <br />
+                  <span>One Mission</span>
+                </h1>
+              </div>
+              <div className="relative py-10  md:w-1/2 flex items-center justify-center">
+                <img
+                  src={why}
+                  alt="Illustrator"
+                  className="w-[80%]  md:w-[80%] lg:w-[75%] lg:h-[85%] lg:mr-110 md:ml-100 lg:mb-10    object-cover rounded-[2rem] md:rounded-[4rem] lg:-translate-y-[350px]"
+                />
+              </div>
+
+              {/* Wrapper for Paragraph + Icons + Button */}
+              <div className="flex flex-col px-6 md:px-30 mt-5 gap-6 lg:ml-[500px] lg:-mt-[800px]">
+                <p className="p-5 text-lg max-w-2xl leading-relaxed">
+                  Professionals of the industry with an abundance of knowledge
+                  and expertise make up our team. We customize our services to
+                  fit your specific business goals. We prioritize quality in
+                  every project, ensuring optimal results for our clients. Your
+                  success is our mission, and we work collaboratively to achieve
+                  your goals.
+                </p>
+
+                <div className="p-5 flex gap-10 justify-between">
+                  <div className="flex items-center gap-4">
+                    <IoSettingsOutline size={40} />
+                    <div>
+                      <p>Ready to elevate your business?</p>
+                      <p className="text-xs">
+                        Contact us today to schedule a consultation.
+                      </p>
+                    </div>
+                  </div>
                   <div>
-                    <p>Ready to elevate your business?</p>
-                    <p className="text-xs">
-                      Contact us today to schedule a consultation.
-                    </p>
+                    <button className="text-lg border bg-white text-black border-white rounded-3xl p-3 hover:bg-white hover:text-black transition whitespace-nowrap">
+                      <Link to="/contact">Contact Us</Link>
+                    </button>
                   </div>
                 </div>
-                <div>
-                  <button className="text-lg border bg-white text-black border-white rounded-3xl py-3 px-5 hover:bg-white hover:text-black transition">
-                    <Link to="/contact"> Contact Us</Link>
-                  </button>
-                </div>
               </div>
-            </div>
-
-            {/* Image Section - RIGHT SIDE */}
-            <div className="relative w-full md:w-1/2 flex items-center justify-center">
-              <div className="absolute top-0 left-0 right-0 bottom-0 opacity-75 rounded-tl-[8rem] rounded-br-[8rem] overflow-hidden"></div>
-              <img
-                src={why}
-                alt="Illustrator"
-                className="relative w-[80%] h-[100%] object-cover rounded-[8rem] rounded-br-[8rem] translate-y-[-170px]"
-              />
             </div>
           </div>
         </div>
       </div>
+
+
       <div
         ref={ServiRef}
-        className="h-100 flex px-10 bg-white items-center font-['Syne',_sans-serif]"
+        className="w-full h-fit bg-white font-['Syne',_sans-serif] px-4 sm:px-10 py-16 flex flex-col sm:flex-row items-center justify-center"
       >
-        <div className="">
+        <div className="max-w-3xl text-center sm:text-left">
           <h1
-            className={`text-xl font-normal mr-30 transition-all duration-1000 transform ${
+            className={`text-xl font-normal transition-all duration-1000 transform ${
               ServiInView
                 ? "opacity-100 translate-x-0"
                 : "opacity-0 -translate-x-10"
             }`}
           >
-            <h1 className="mb-8 text-5xl">
+            <span className="block mb-8 text-3xl sm:text-5xl font-bold leading-tight">
               Elevate Your Business with Expert Services
-            </h1>
-            Let’s transform your IT infrastructure and unlock your
-            organization’s true potential. Whether you're aiming to streamline
-            operations or boost digital growth, Anasol Consultancy is your
-            trusted partner. Contact us today to learn more about our IT
-            management services in Uppal, Hyderabad — and take your business
-            confidently into the future.
+            </span>
+            Let’s transform your IT infrastructure and unlock your organization’s true potential. Whether you're aiming to streamline operations or boost digital growth, Anasol Consultancy is your trusted partner. Contact us today to learn more about our IT management services in Uppal, Hyderabad — and take your business confidently into the future.
           </h1>
-          <button className=" text-lg bg-gray-800 mt-10 hover:bg-gray-700 text-white py-5 px-8 rounded-full flex items-center gap-2  animate-bounce">
+
+          <button className="text-lg bg-gray-800 mt-10 hover:bg-gray-700 text-white py-5 px-8 rounded-full flex items-center gap-2 mx-auto sm:mx-0 animate-bounce">
             <Link to="/contact" className="flex gap-2 items-center">
               <BsCalendarCheck />
               Get In Touch
@@ -265,6 +273,8 @@ const ServiceMain = () => {
           </button>
         </div>
       </div>
+
+      
     </div>
   );
 };

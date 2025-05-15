@@ -3,10 +3,7 @@ import { BsCalendarCheck } from "react-icons/bs";
 import logo from "../assets/Logo1.png";
 import { CiMail } from "react-icons/ci";
 import { IoLocation } from "react-icons/io5";
-import { FaInstagram } from "react-icons/fa";
-import { FaLinkedin } from "react-icons/fa6";
-import { FaXTwitter } from "react-icons/fa6";
-import { FaCopy } from "react-icons/fa";
+import { FaInstagram, FaLinkedin, FaXTwitter, FaCopy } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
@@ -14,28 +11,27 @@ const Footer = () => {
 
   const copyEmailToClipboard = () => {
     const email = "admin@anasolconsultancyservices.com";
-    navigator.clipboard
-      .writeText(email)
-      .then(() => {
-        setIsCopied(true);
-        setTimeout(() => setIsCopied(false), 2000); // Popup disappears after 2 seconds
-      })
-      .catch((err) => {
-        console.error("Failed to copy email: ", err);
-      });
+    navigator.clipboard.writeText(email).then(() => {
+      setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 2000);
+    });
   };
 
   return (
-    <footer className="bg-black font-['Syne',_sans-serif] text-white p-8">
-      <div className="max-w-screen-xl mx-auto text-center space-y-4">
-        <div className="flex justify-between">
-          <div>
-            <div className="flex items-center space-x-3">
-              <img src={logo} alt="logo" className="w-15" />
-              <span className="text-2xl font-semibold text-white">
-                Anasol Consultancy Services
-                {<br></br>} <p className="text-white text-sm"> Since 2016</p>
-              </span>
+    <footer className="bg-black text-white font-['Syne',_sans-serif] px-6 py-10">
+      <div className="max-w-screen-xl mx-auto space-y-10">
+        {/* Top */}
+        <div className="flex flex-col md:flex-row justify-between items-start gap-8">
+          {/* Logo */}
+          <div className="flex-1 min-w-[280px] space-y-3">
+            <div className="flex items-center gap-3">
+              <img src={logo} alt="logo" className="w-16" />
+              <div>
+                <h2 className="text-2xl font-semibold">
+                  Anasol Consultancy Services
+                </h2>
+                <p className="text-sm text-gray-400">Since 2016</p>
+              </div>
             </div>
             <p className="text-gray-400">
               Feel free to initiate a project and let's explore how we can
@@ -43,15 +39,19 @@ const Footer = () => {
             </p>
           </div>
 
-          <div className="flex  items-center gap-2 mt-4">
-            <button className="bg-gray-800 hover:bg-gray-700 text-white py-2 px-4 rounded-full flex items-center gap-2">
+          {/* Buttons */}
+          <div className="flex-1 flex flex-col sm:flex-row gap-4 justify-end items-center w-full sm:w-auto">
+            <Link
+              to="/contact"
+              className="bg-gray-800 hover:bg-gray-700 text-white py-2 px-4 rounded-full flex items-center gap-2 justify-center w-full sm:w-auto"
+            >
               <BsCalendarCheck />
-              <Link to="/contact">LET’S CONNECT</Link>
-            </button>
-            <div className="relative">
+              LET’S CONNECT
+            </Link>
+            <div className="relative w-full sm:w-auto">
               <button
                 onClick={copyEmailToClipboard}
-                className="bg-gray-300 hover:bg-gray-400 text-gray-800 py-2 px-4 rounded-full flex items-center gap-2"
+                className="bg-gray-300 hover:bg-gray-400 text-black py-2 px-4 rounded-full flex items-center gap-2 w-full justify-center"
               >
                 <FaCopy />
                 COPY EMAIL
@@ -65,47 +65,46 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="p-8" />
+        {/* Divider */}
+        <div className="border-t border-gray-600"></div>
 
-        <div className="flex justify-between items-center p-2 border-t border-b border-white ">
-          <div className="flex justify-center gap-8 text-gray-400">
-            <div>
-              <a
-                href="mailto:admin@anasolconsultancyservices.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 text-white cursor-pointer"
-              >
-                <CiMail />
-                admin@anasolconsultancyservices.com
-              </a>
-
-              <a
-                href="https://www.google.co.in/maps/place/Anasol+Consultancy+Services+Pvt+Ltd/@17.3998302,78.5528739,17z/data=!3m1!4b1!4m6!3m5!1s0x3bcb99373294cf7f:0x3876959fe67ce02e!8m2!3d17.3998302!4d78.5554488!16s%2Fg%2F11wj2d324x?entry=ttu&g_ep=EgoyMDI1MDUwNS4wIKXMDSoASAFQAw%3D%3D"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex flex-col items-start gap-1 text-white cursor-pointer"
-              >
-                <div className="flex items-center gap-2">
-                  <IoLocation />
-                  anasolconsultancyservices Pvt Ltd
-                </div>
-                <p className="text-gray-400 text-sm">
-                  1016, 10th floor, DSL abacus IT park, Uppal, Hyderabad,
-                  500039, India
-                </p>
-              </a>
-            </div>
+        {/* Contact + Socials */}
+        <div className="flex flex-col lg:flex-row justify-between items-start gap-8">
+          {/* Contact */}
+          <div className="flex-1 min-w-[280px] space-y-4">
+            <a
+              href="mailto:admin@anasolconsultancyservices.com"
+              className="flex items-center gap-2 text-white hover:text-gray-300"
+            >
+              <CiMail />
+              admin@anasolconsultancyservices.com
+            </a>
+            <a
+              href="https://www.google.co.in/maps/place/Anasol+Consultancy+Services+Pvt+Ltd/@17.3998302,78.5528739"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex flex-col gap-1 text-white hover:text-gray-300"
+            >
+              <span className="flex items-center gap-2">
+                <IoLocation />
+                anasolconsultancyservices Pvt Ltd
+              </span>
+              <p className="text-sm text-gray-400">
+                1016, 10th floor, DSL Abacus IT Park, Uppal, Hyderabad, 500039,
+                India
+              </p>
+            </a>
           </div>
 
-          <div className="flex justify-center gap-6 text-gray-400 mt-4">
+          {/* Social */}
+          <div className="flex-1 flex justify-center lg:justify-end gap-6 text-gray-400">
             <a
-              href="https://www.instagram.com/anasol_consultancy_services?igsh=MW9rNDByMGRpZDFiaw=="
+              href="https://www.instagram.com/anasol_consultancy_services"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-white"
             >
-              <FaInstagram size={25} />
+              <FaInstagram size={24} />
             </a>
             <a
               href="https://www.linkedin.com/company/anasol-consultancy-services/"
@@ -113,20 +112,23 @@ const Footer = () => {
               rel="noopener noreferrer"
               className="hover:text-white"
             >
-              <FaLinkedin size={25} />
+              <FaLinkedin size={24} />
             </a>
             <a
-              href="https://x.com/anasol_services?t=vIM5K3hRnhwu6cm8AkN_xw&s=09"
+              href="https://x.com/anasol_services"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-white"
             >
-              <FaXTwitter size={25} />
+              <FaXTwitter size={24} />
             </a>
           </div>
         </div>
 
-        <p className="font-normal text-white mt-6">Copyright © 2025</p>
+        {/* Copyright */}
+        <p className="text-center text-sm text-white pt-6">
+          &copy; 2025 Anasol Consultancy Services
+        </p>
       </div>
     </footer>
   );

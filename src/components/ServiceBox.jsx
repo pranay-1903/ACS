@@ -12,8 +12,8 @@ const ServiceBox = ({ icon: Icon, bgImage, number, title, description }) => {
 
   return (
     <div
-      className="relative group overflow-hidden rounded-lg border border-gray-200 bg-white transition-all duration-300 hover:shadow-lg py-3 mt-8"
-      style={{ height: "400px", width: "350px" }}
+      className="relative group overflow-hidden rounded-lg border border-gray-200 h-[370px] w-[330px] lg:h-[400px] lg:w-[350px]  bg-black lg:bg-white transition-all duration-300 hover:shadow-lg py-3 mt-8"
+      
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -48,11 +48,11 @@ const ServiceBox = ({ icon: Icon, bgImage, number, title, description }) => {
       <img
         src={bgImage}
         alt="background"
-        className="absolute inset-0 h-full w-full object-cover opacity-0 group-hover:opacity-90 transition-opacity duration-300 z-0"
+        className="absolute inset-0 h-full w-full object-cover opacity-50 lg:opacity-0 bg-black group-hover:opacity-90 transition-opacity duration-300 z-0"
       />
 
       {/* Overlay */}
-      <div className="relative z-10 p-6 flex flex-col h-full justify-between group-hover:text-white transition-colors duration-300">
+      <div className="relative z-10 p-6 flex flex-col h-full justify-between text-white lg:text-black group-hover:text-white transition-colors duration-300">
         {/* Icon */}
         <div className="flex justify-start">
           <div className="bg-[#f1f5f9] group-hover:bg-white p-4 rounded-full w-fit">

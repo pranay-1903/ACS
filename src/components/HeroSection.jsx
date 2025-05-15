@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import AOS from "aos";
 import { Link } from "react-router-dom";
 import "aos/dist/aos.css";
+import { TypeAnimation } from "react-type-animation";
 import emp from "../assets/emp.png";
 import intern from "../assets/intern.png";
 import service from "../assets/OurSer.png";
@@ -35,10 +36,25 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const HeroSection = () => {
-  const [isVisibleOnRefresh, setIsVisibleOnRefresh] = useState(false);
+  const [isVisibleOnRefresh, setIsVisible] = useState(false);
   const [isInView, setIsInView] = useState(false);
   const circleServicesRef = useRef(null);
+  const [textAnimationDone, setTextAnimationDone] = useState(false);
+
   const [animationTriggered, setAnimationTriggered] = useState(false);
+  const { ref: headingRef, inView: isHeadingInView } = useInView({
+    triggerOnce: true,
+  });
+  const { ref: strategyHeadingRef, inView: isStrategyHeadingInView } =
+    useInView({
+      triggerOnce: true,
+    });
+  const { ref: missionRef, inView: isMissionInView } = useInView({
+    triggerOnce: true,
+  });
+  const [isTypingDone, setIsTypingDone] = useState(false);
+
+  const [isStrategyTypingDone, setIsStrategyTypingDone] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -61,12 +77,7 @@ const HeroSection = () => {
       }
     };
   }, []);
-  useEffect(() => {
-    // Trigger animation only on component mount (refresh)
-    setTimeout(() => {
-      setIsVisibleOnRefresh(true);
-    }, 200); // Adjust the delay if needed
-  }, []);
+  
   const technologies = [
     { name: "Salesforce", icon: sales },
     { name: "AWS", icon: aws },
@@ -218,11 +229,11 @@ const HeroSection = () => {
   ];
 
   return (
-    <div className="py-20">
+    <div className="py-20 overflow-x-hidden overflow-y-auto ">
       {/* Hero Section */}
-      <div className="bg-white min-h-screen flex flex-col md:flex-row items-center justify-between px-4 md:px-10 py-10 md:py-20">
+      <div className="bg-white min-h-screen flex flex-col md:flex-col lg:flex-row items-center justify-between px-4 md:px-10 py-10 md:py-20">
         {/* Text Section */}
-        <div className="max-w-xl md:pl-10 text-center md:text-left">
+        <div className="max-w-xl md:pl-10 text-center md:text-left flex flex-col">
           <motion.h1
             initial={{ opacity: 0, y: 50, scale: 0.95 }}
             animate={{
@@ -240,33 +251,55 @@ const HeroSection = () => {
             </span>
             .
           </motion.h1>
+
           <h2 className="text-lg font-semibold mb-2 font-['Syne',_sans-serif]">
             👋 Best Solutions Services
           </h2>
-          <p className="text-gray-700 text-base md:text-lg mb-6 md:mb-8 font-['Syne',_sans-serif]">
-            Welcome to Anasol Consultancy Services, where we specialize in
-            transforming businesses through technology solutions.
-          </p>
-          <button className="bg-[#0f172a] text-white px-5 py-2 md:px-6 md:py-3 rounded-full font-semibold flex items-center gap-2 hover:bg-[#1e293b] cursor-pointer transition">
-            <Link to="/contact">🗨 LET'S TALK</Link>
-          </button>
-        </div>
 
-        {/* Image Section */}
-        <div className="mt-8 md:mt-0 md:ml-10 pr-0 md:pr-10 w-full max-w-xs md:max-w-md">
-          <div
-            className="rounded-[3rem] border-[1px] border-[#0f172a] p-2 md:p-4 transition duration-700 transform opacity-0 translate-y-10"
-            onLoad={(e) =>
-              e.currentTarget.classList.remove("opacity-0", "translate-y-10")
-            }
+          {/* Animated Image for md screen */}
+          <motion.div
+            initial={{ opacity: 0, y: 40, scale: 0.95 }}
+            animate={{
+              opacity: isVisibleOnRefresh ? 1 : 0,
+              y: isVisibleOnRefresh ? 0 : 40,
+              scale: 1,
+            }}
+            transition={{ duration: 1, ease: "easeOut", delay: 0.3 }}
+            className="md:block lg:hidden mt-4 max-w-xs md:max-w-md mx-auto md:mx-0 rounded-[3rem] border-[1px] border-[#0f172a] p-2 md:p-2"
           >
             <img
               src={img1}
               alt="Consultancy"
-              className="rounded-[2rem] md:rounded-[3rem] object-contain w-full h-auto"
+              className="rounded-[2rem] md:rounded-[3rem] object-contain w-full"
             />
-          </div>
+          </motion.div>
+
+          <p className="text-gray-700 text-base md:p-8 lg:p-2 md:text-lg mb-6 md:mb-8 font-['Syne',_sans-serif]">
+            Welcome to Anasol Consultancy Services, where we specialize in
+            transforming businesses through technology solutions.
+          </p>
+          <button className="bg-[#0f172a] text-white px-5 py-2 md:px-6 md:py-3 rounded-full font-semibold gap-2 hover:bg-[#1e293b] cursor-pointer transition">
+            <Link to="/contact">🗨 LET'S TALK</Link>
+          </button>
         </div>
+
+        {/* Animated Image Section for large screens */}
+        <motion.div
+          initial={{ opacity: 0, y: 40, scale: 0.95 }}
+          animate={{
+            opacity: isVisibleOnRefresh ? 1 : 0,
+            y: isVisibleOnRefresh ? 0 : 40,
+            scale: 1,
+          }}
+          transition={{ duration: 1, ease: "easeOut", delay: 0.3 }}
+          className="hidden lg:block mt-8 md:mt-0 md:ml-10 max-w-xs md:max-w-md rounded-[3rem] border-[1px] border-[#0f172a] p-2 md:p-2"
+        >
+          <img
+            src={img1}
+            alt="Consultancy"
+            className="rounded-[2rem] md:rounded-[3rem] object-contain w-full"
+          />
+        </motion.div>
       </div>
 
       <div
@@ -283,20 +316,50 @@ const HeroSection = () => {
           Our Services
         </h1>
       </div>
-
       {/* Services Section */}
-
       {/* About Us Content */}
       <div className="font-sans min-h-screen bg-black">
         {/* Header */}
         <div className="px-6 md:px-10 lg:px-20 py-10">
-          <button className="border border-white w-fit p-3 rounded-2xl mb-4">
+          <button className="ml-30 border border-white w-fit p-3 rounded-2xl mb-4">
             <p className="text-white font-['Syne',_sans-serif]">SERVICES</p>
           </button>
-          <h1 className="text-2xl md:text-3xl text-white font-semibold leading-tight font-['Syne',_sans-serif]">
-            <span className="text-lg block">Best Solutions Services</span>
-            Offers Expert Services To Help
-          </h1>
+          <motion.div
+            ref={headingRef}
+            initial={{ opacity: 0, y: 50 }}
+            animate={isHeadingInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
+            className="text-2xl md:text-3xl text-white font-semibold leading-tight font-['Syne',_sans-serif]"
+          >
+            {isHeadingInView && (
+              <>
+                <TypeAnimation
+                  sequence={["Best Solutions Services", 1000]}
+                  wrapper="span"
+                  speed={60}
+                  cursor={false}
+                  className="text-lg ml-4 block md:text-4xl"
+                  // ✅ triggers next animation
+                />
+                <TypeAnimation
+                  sequence={[
+                    "Offers Expert",
+                    500,
+                    "Offers Expert Services To Help",
+                  ]}
+                  wrapper="span"
+                  speed={60}
+                  cursor={false}
+                  className="ml-6 md:text-2xl md:ml-4 block"
+                  onTypingDone={() => {
+                    console.log("Text typing animation complete");
+                    setTextAnimationDone(true);
+                  }}
+                  // ✅ triggers next animation
+                />
+              </>
+            )}
+          </motion.div>
         </div>
 
         {/* Main Content */}
@@ -305,7 +368,7 @@ const HeroSection = () => {
           <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-start text-white font-['Syne',_sans-serif]">
             <div
               ref={circleServicesRef}
-              className="relative  w-[300px] h-[300px] md:w-[400px] md:h-[400px] flex items-center justify-center mb-10"
+              className="relative   w-[300px] h-[300px] md:w-[400px] md:h-[400px] flex items-center justify-center mb-10"
             >
               <div className="absolute w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden border-4 border-blue-700 flex items-center justify-center z-10">
                 <img
@@ -352,7 +415,7 @@ const HeroSection = () => {
                 );
               })}
             </div>
-            <button className="text-sm p-2  md:text-base md:px-5  md:py-2 lg:text-xl lg:p-3 lg:ml-30 border bg-white text-black border-white rounded-3xl  hover:bg-white hover:text-black transition">
+            <button className="text-sm p-3 mb-15  md:text-base md:px-5  md:py-2 lg:text-xl lg:p-3 lg:ml-30 border bg-white text-black border-white rounded-3xl  hover:bg-white hover:text-black transition">
               <Link to="/services">View More {">"}</Link>
             </button>
           </div>
@@ -362,12 +425,11 @@ const HeroSection = () => {
             <img
               src={service}
               alt="Illustrator"
-              className="w-[90%] md:w-[80%] h-auto object-cover rounded-[2rem] md:rounded-[4rem] lg:-translate-y-[350px]"
+              className="w-[70%]  md:w-[55%] lg:w-[70%] h-auto  object-cover rounded-[2rem] md:rounded-[4rem] lg:-translate-y-[350px]"
             />
           </div>
         </div>
       </div>
-
       <div
         ref={ref}
         className="h-50 flex justify-end px-10 bg-white items-center font-['Syne',_sans-serif]"
@@ -380,63 +442,90 @@ const HeroSection = () => {
           About Us
         </h1>
       </div>
-
       <div className="font-sans min-h-screen bg-black">
         {/* About Us Content */}
-        <div className="relative min-h-screen flex items-center justify-center">
-          <div className="flex flex-col md:flex-row w-full max-w-6xl">
-            {/* Image Section */}
-            <div className="relative w-full md:w-1/2 flex items-center justify-center">
-              <div className="absolute top-0 left-0 right-0 bottom-0 opacity-75 rounded-tl-[8rem] rounded-br-[8rem] overflow-hidden"></div>
-              <img
-                src={img6}
-                alt="Illustrator"
-                className="relative w-[80%] h-[100%] lg:-translate-y-[150px] lg:mr-30 lg:w-[95%] lg:h-[90%]  lg:mb-20 py-10 object-cover rounded-[8rem] rounded-br-[8rem] md:ml-40 md:h-[60%] md:w-[100%] "
-              />
-            </div>
+        <div className="relative h-fit flex items-center justify-center">
+          {/* Main container */}
+          <div className="w-full max-w-6xl flex flex-col md:flex-row">
+            {/* Left side for md+: Image */}
 
-            {/* Text Section */}
-            <div className="w-full md:w-auto py-20 flex flex-col font-['Syne', _sans-serif] text-white">
-              <button>
-                <span className="text-white border border-white py-2 px-4 rounded-2xl">
-                  ABOUT
-                </span>
-              </button>
+            {/* Right side for md+: Text */}
+            <div className="md:w-auto py-20 flex flex-col font-['Syne',_sans-serif] text-white">
+              {/* Wrapper for About button + Heading */}
+              <div className="flex flex-col px-6 md:px-30">
+                <button>
+                  <span className="text-white border border-white py-2 px-4 rounded-2xl  lg:ml-120">
+                    ABOUT
+                  </span>
+                </button>
 
-              <h1 className="text-3xl p-5 px-6 md:px-30 lg:text-4xl font-semibold leading-tight whitespace-nowrap">
-                <span>Strategy with Purpose,</span>
-                <br />
-                <span>Solutions with Impact</span>
-              </h1>
-              <span className="p-5 px-6 md:px-30 font-normal text-lg max-w-3xl leading-relaxed">
-                At Anasol Consultancy, we are dedicated to delivering tailored
-                consultancy services that drive efficiency and growth. With a
-                team of seasoned experts in various fields, we leverage our
-                knowledge and experience to empower organizations like yours to
-                reach their full potential. Our team's commitment to excellence
-                allows us to deliver solutions that not only meet but exceed
-                your expectations.
-              </span>
-              <span className="p-5 px-6 md:px-30">
-                <div className="flex justify-between">
+                <motion.div
+                  ref={strategyHeadingRef}
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={isStrategyHeadingInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.6 }}
+                  className="ml-10 md:ml-25 pt-5 lg:ml-120"
+                >
+                  {isStrategyHeadingInView && (
+                    <h1 className="text-2xl md:text-3xl lg:text-4xl font-semibold leading-tight whitespace-nowrap text-white">
+                      <TypeAnimation
+                        sequence={["Strategy with Purpose,", 1000]}
+                        speed={50}
+                        cursor={false}
+                        wrapper="span"
+                        className="block"
+                      />
+                      <TypeAnimation
+                        sequence={["Solutions with Impact"]}
+                        speed={50}
+                        cursor={false}
+                        wrapper="span"
+                        className="block"
+                        onTypingDone={() => setIsStrategyTypingDone(true)}
+                      />
+                    </h1>
+                  )}
+                </motion.div>
+              </div>
+              <div className="relative mt-10 md:w-1/2 flex items-center  justify-center">
+                <img
+                  src={img6}
+                  alt="Illustrator"
+                  className="w-[80%]  md:w-[85%] md:ml-100 lg:mr-100 lg:w-[70%] h-auto  object-cover rounded-[2rem] md:rounded-[4rem] lg:-translate-y-[350px]"
+                />
+              </div>
+
+              {/* Wrapper for Paragraph + Icons + Button */}
+              <div className="flex flex-col px-6 md:px-30 mt-5 gap-6 lg:ml-[480px] lg:-mt-[600px]">
+                <p className="font-normal text-lg max-w-3xl leading-relaxed">
+                  At Anasol Consultancy, we are dedicated to delivering tailored
+                  consultancy services that drive efficiency and growth. With a
+                  team of seasoned experts in various fields, we leverage our
+                  knowledge and experience to empower organizations like yours
+                  to reach their full potential. Our team's commitment to
+                  excellence allows us to deliver solutions that not only meet
+                  but exceed your expectations.
+                </p>
+
+                <div className="flex gap-8 flex-col lg:gap-10 md:flex-row   md:gap-20 items-start md:items-center">
                   <div className="flex items-center gap-2">
                     <IoSettingsOutline size={40} />
-                    <p className="text-xs lg:text-sm">
-                      Best Services
+                    <div>
+                      <p className="text-xs lg:text-sm font-semibold">
+                        Best Services
+                      </p>
                       <p className="text-xs lg:text-sm">
                         We can deliver a high-quality <br /> product that meets
                         your needs.
                       </p>
-                    </p>
+                    </div>
                   </div>
 
-                  <div>
-                    <button className="text-sm hover:cursor-pointer p-2  md:text-base md:px-5 md:py-2 lg:text-lg lg:p-3 border bg-white text-black border-white rounded-3xl  hover:bg-white hover:text-black transition">
-                      <Link to="/about"> View More {">"}</Link>
-                    </button>
-                  </div>
+                  <button className="text-sm hover:cursor-pointer p-2 md:text-base md:px-5 md:py-2 lg:text-lg lg:p-3 border bg-white text-black border-white rounded-3xl hover:bg-white hover:text-black transition whitespace-nowrap">
+                    <Link to="/about"> View More {">"}</Link>
+                  </button>
                 </div>
-              </span>
+              </div>
             </div>
           </div>
         </div>
@@ -492,7 +581,7 @@ const HeroSection = () => {
       </div>
       <div
         ref={whyChooseRef}
-        className="h-50 flex px-10 bg-white items-center font-['Syne',_sans-serif]"
+        className="h-80 flex px-10 bg-white items-center font-['Syne',_sans-serif]"
       >
         <h1
           className={`text-7xl font-extrabold mr-30 transition-all duration-1000 transform ${
@@ -504,67 +593,99 @@ const HeroSection = () => {
           Why Choose Us
         </h1>
       </div>
-
       <div className="font-sans min-h-screen bg-black">
         {/* About Us Content */}
-        <div className="relative min-h-screen flex items-center justify-center">
-          <div className="flex flex-col md:flex-row w-full max-w-6xl">
-            {/* Text Section - LEFT SIDE */}
-            <div className="w-full md:w-1/2 py-20 flex flex-col font-['Syne',_sans-serif] text-white pr-10">
-              <button className=" border border-white w-fit p-2 rounded-2xl ml-5 ">
-                <p className="text-white ">WHY CHOOSE US</p>
-              </button>
-              <h1 className="text-4xl p-5 font-semibold leading-tight">
-                <span>Your Goals. Our Expertise. </span>
-                <br />
-                <span>One Mission</span>
-              </h1>
+        <div className="relative h-fit flex items-center justify-center">
+          {/* Main container */}
+          <div className="w-full max-w-6xl flex flex-col md:flex-row">
+            {/* Left side for md+: Image */}
 
-              <p className="p-5 text-lg max-w-2xl leading-relaxed">
-                Professionals of the industry with an abundance of knowledge and
-                expertise make up our team. We customize our services to fit
-                your specific business goals. We prioritize quality in every
-                project, ensuring optimal results for our clients. Your success
-                is our mission, and we work collaboratively to achieve your
-                goals.
-              </p>
+            {/* Right side for md+: Text */}
+            <div className="md:w-auto py-20 flex flex-col font-['Syne',_sans-serif] text-white">
+              {/* Wrapper for About button + Heading */}
+              <div className="flex flex-col px-6 md:px-30">
+                <button>
+                  <span className="text-white border border-white py-2 px-4 rounded-2xl lg:ml-50">
+                    Why Choose Us
+                  </span>
+                </button>
 
-              <div className="p-5 flex justify-between">
-                <div className="flex items-center gap-2">
-                  <IoSettingsOutline size={40} />
+                <motion.div
+                  ref={missionRef}
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={isMissionInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.6 }}
+                  className="md:ml-20 lg:ml-[130px] pt-5"
+                >
+                  {isMissionInView && (
+                    <h1 className="text-2xl md:text-3xl lg:text-4xl lg:ml-100 font-semibold leading-tight whitespace-nowrap">
+                      <TypeAnimation
+                        sequence={["Your Goals. Our Expertise. ", 1000]}
+                        speed={60}
+                        wrapper="span"
+                        cursor={false}
+                        className="block"
+                      />
+                      <TypeAnimation
+                        sequence={["One Mission"]}
+                        speed={60}
+                        wrapper="span"
+                        className="block"
+                        cursor={false}
+                        onTypingDone={() => setIsTypingDone(true)}
+                      />
+                    </h1>
+                  )}
+                </motion.div>
+              </div>
+              <div className="relative py-10  md:w-1/2 flex items-center justify-center">
+                <img
+                  src={why}
+                  alt="Illustrator"
+                  className="w-[80%]  md:w-[80%] lg:w-[75%] lg:h-[85%] lg:mr-110 md:ml-100 lg:mb-10    object-cover rounded-[2rem] md:rounded-[4rem] lg:-translate-y-[350px]"
+                />
+              </div>
+
+              {/* Wrapper for Paragraph + Icons + Button */}
+              <div className="flex flex-col px-6 md:px-30 mt-5 gap-6 lg:ml-[500px] lg:-mt-[800px]">
+                <p className="p-5 text-lg max-w-2xl leading-relaxed">
+                  Professionals of the industry with an abundance of knowledge
+                  and expertise make up our team. We customize our services to
+                  fit your specific business goals. We prioritize quality in
+                  every project, ensuring optimal results for our clients. Your
+                  success is our mission, and we work collaboratively to achieve
+                  your goals.
+                </p>
+
+                <div className="p-5 flex gap-10 justify-between">
+                  <div className="flex items-center gap-4">
+                    <IoSettingsOutline size={40} />
+                    <div>
+                      <p>Ready to elevate your business?</p>
+                      <p className="text-xs">
+                        Contact us today to schedule a consultation.
+                      </p>
+                    </div>
+                  </div>
                   <div>
-                    <p>Ready to elevate your business?</p>
-                    <p className="text-xs">
-                      Contact us today to schedule a consultation.
-                    </p>
+                    <button className="text-lg border bg-white text-black border-white rounded-3xl p-3 hover:bg-white hover:text-black transition whitespace-nowrap">
+                      <Link to="/contact">Contact Us</Link>
+                    </button>
                   </div>
                 </div>
-                <div>
-                  <button className="text-lg border bg-white text-black border-white rounded-3xl py-3 px-5 hover:bg-white hover:text-black transition">
-                    <Link to="/contact"> Contact Us</Link>
-                  </button>
-                </div>
               </div>
-            </div>
-
-            {/* Image Section - RIGHT SIDE */}
-            <div className="relative w-full md:w-1/2 flex items-center justify-center">
-              <div className="absolute top-0 left-0 right-0 bottom-0 opacity-75 rounded-tl-[8rem] rounded-br-[8rem] overflow-hidden"></div>
-              <img
-                src={why}
-                alt="Illustrator"
-                className="relative w-[80%] h-[100%] object-cover rounded-[8rem] rounded-br-[8rem] translate-y-[-170px]"
-              />
             </div>
           </div>
         </div>
       </div>
-      <div className="h-fit p-20 flex items-center justify-center bg-white">
-        <div className="text-center">
-          <h1 className="text-3xl font-bold mb-20 text-black">
+
+      <div className="h-fit p-5 sm:p-10 flex items-center justify-center bg-white overflow-x-hidden">
+        <div className="text-center max-w-7xl ">
+          <h1 className="text-2xl sm:text-3xl font-bold mb-10 sm:mb-20 text-black">
             Improve and Innovate with the Use of Technology Trends
           </h1>
-          <div className="grid grid-cols-4 gap-x-6 gap-y-12">
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-8 px-2 sm:px-0">
             {technologies.map((tech, index) => (
               <motion.div
                 key={index}
@@ -584,12 +705,13 @@ const HeroSection = () => {
           </div>
         </div>
       </div>
+
       {showButton && (
         <button
           onClick={scrollToTop}
           className="fixed bottom-10 right-10 bg-white text-black rounded-full shadow-md hover:bg-[#e5e5e5] cursor-pointer transition z-50"
         >
-          <FaCircleChevronUp size={40} />
+          <FaCircleChevronUp size={45} />
         </button>
       )}
     </div>
