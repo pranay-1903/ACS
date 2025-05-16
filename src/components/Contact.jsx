@@ -1,24 +1,27 @@
 import { useState, useEffect } from "react";
 import Lottie from "lottie-react";
+import React from "react";
 import AnimatedCard from "./AnimatedCard";
 import Image from "../assets/contactbg.jpeg";
-import { Link,useNavigate } from "react-router-dom";
+
 // Lottie files
 import Instagram from "../assets/Instagram.json";
 import Gmail from "../assets/Gmail.json";
 import link from "../assets/LinkedIn.json";
 import X from "../assets/Twitter.json";
+import { useNavigate } from "react-router-dom";
 
 const ConnectSection = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => setIsVisible(true), 100);
+    window.scrollTo({ top: 0, behavior: "smooth" }); 
     return () => clearTimeout(timer);
   }, []);
-
+  
+  
   const navigate = useNavigate();
-
   return (
     <div className="font-['Syne',_sans-serif]">
       {/* Header Section */}
@@ -39,16 +42,19 @@ const ConnectSection = () => {
             className={`px-6 py-2 rounded-full text-lg font-medium transition-opacity duration-1000 bg-[rgba(255,255,255,0.1)] backdrop-blur-sm ${
               isVisible ? "opacity-100" : "opacity-0"
             }`}
-          >
-            <Link to="/">
-              <span
-              onClick={() => navigate("/")}
-              className="cursor-pointer text-white hover:text-blue-500 transition-colors duration-300"
-            >
-              Home
-            </span>
-            </Link> <span className="mx-2">/</span>{" "}
-            <span>Contact</span>
+          > <span
+          onClick={() => navigate("/")}
+          className="cursor-pointer text-white hover:text-blue-500 transition-colors duration-300"
+        >
+          Home
+        </span>
+        <span className="mx-2">/</span>
+        <span
+          onClick={() => navigate("/contact")}
+          className="font-['Syne',_sans-serif] cursor-pointer text-white hover:text-blue-500 transition-colors duration-300"
+        >
+          Contact
+        </span>
           </div>
         </div>
       </div>

@@ -9,3 +9,4 @@ export default defineConfig({
     port:5173 // 👈 This allows external devices to connect
   },
 });
+ 
