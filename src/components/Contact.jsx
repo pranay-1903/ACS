@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import Lottie from "lottie-react";
-import React from "react";
 import AnimatedCard from "./AnimatedCard";
 import Image from "../assets/contactbg.jpeg";
-
+import { Link,useNavigate } from "react-router-dom";
 // Lottie files
 import Instagram from "../assets/Instagram.json";
 import Gmail from "../assets/Gmail.json";
@@ -17,6 +16,8 @@ const ConnectSection = () => {
     const timer = setTimeout(() => setIsVisible(true), 100);
     return () => clearTimeout(timer);
   }, []);
+
+  const navigate = useNavigate();
 
   return (
     <div className="font-['Syne',_sans-serif]">
@@ -39,7 +40,14 @@ const ConnectSection = () => {
               isVisible ? "opacity-100" : "opacity-0"
             }`}
           >
-            <span>Home</span> <span className="mx-2">/</span>{" "}
+            <Link to="/">
+              <span
+              onClick={() => navigate("/")}
+              className="cursor-pointer text-white hover:text-blue-500 transition-colors duration-300"
+            >
+              Home
+            </span>
+            </Link> <span className="mx-2">/</span>{" "}
             <span>Contact</span>
           </div>
         </div>

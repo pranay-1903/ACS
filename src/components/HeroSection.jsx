@@ -55,7 +55,18 @@ const HeroSection = () => {
   const [isTypingDone, setIsTypingDone] = useState(false);
 
   const [isStrategyTypingDone, setIsStrategyTypingDone] = useState(false);
+  const [isLargeScreen, setIsLargeScreen] = useState(false);
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsLargeScreen(window.innerWidth >= 1024); // lg breakpoint
+    };
+
+    handleResize(); // Initial check
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -77,7 +88,7 @@ const HeroSection = () => {
       }
     };
   }, []);
-  
+
   const technologies = [
     { name: "Salesforce", icon: sales },
     { name: "AWS", icon: aws },
@@ -235,14 +246,10 @@ const HeroSection = () => {
         {/* Text Section */}
         <div className="max-w-xl md:pl-10 text-center md:text-left flex flex-col">
           <motion.h1
-            initial={{ opacity: 0, y: 50, scale: 0.95 }}
-            animate={{
-              opacity: isVisibleOnRefresh ? 1 : 0,
-              y: isVisibleOnRefresh ? 0 : 50,
-              scale: 1,
-            }}
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: "easeOut" }}
-            className="text-2xl md:text-5xl font-extrabold font-['Syne',_sans-serif] leading-tight text-[#0f172a] mb-4 md:mb-6"
+            className="text-2xl font-['Syne',_sans-serif] md:text-5xl  font-Semibold leading-tight text-[#0f172a] mb-4 md:mb-6"
           >
             Experience Exceptional Consultancy Services <br />
             Designed To Drive Your Success in{" "}
@@ -259,11 +266,7 @@ const HeroSection = () => {
           {/* Animated Image for md screen */}
           <motion.div
             initial={{ opacity: 0, y: 40, scale: 0.95 }}
-            animate={{
-              opacity: isVisibleOnRefresh ? 1 : 0,
-              y: isVisibleOnRefresh ? 0 : 40,
-              scale: 1,
-            }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 1, ease: "easeOut", delay: 0.3 }}
             className="md:block lg:hidden mt-4 max-w-xs md:max-w-md mx-auto md:mx-0 rounded-[3rem] border-[1px] border-[#0f172a] p-2 md:p-2"
           >
@@ -285,12 +288,8 @@ const HeroSection = () => {
 
         {/* Animated Image Section for large screens */}
         <motion.div
-          initial={{ opacity: 0, y: 40, scale: 0.95 }}
-          animate={{
-            opacity: isVisibleOnRefresh ? 1 : 0,
-            y: isVisibleOnRefresh ? 0 : 40,
-            scale: 1,
-          }}
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: "easeOut", delay: 0.3 }}
           className="hidden lg:block mt-8 md:mt-0 md:ml-10 max-w-xs md:max-w-md rounded-[3rem] border-[1px] border-[#0f172a] p-2 md:p-2"
         >
@@ -307,7 +306,7 @@ const HeroSection = () => {
         className="h-50 flex px-10 bg-white items-center font-['Syne',_sans-serif]"
       >
         <h1
-          className={`text-7xl font-extrabold mr-30 transition-all duration-1000 transform ${
+          className={`text-5xl lg:text-7xl md:text-6xl whitespace-nowrap font-extrabold mr-30  transition-all duration-1000 transform ${
             serInView
               ? "opacity-100 translate-x-0"
               : "opacity-0 -translate-x-10"
@@ -315,13 +314,23 @@ const HeroSection = () => {
         >
           Our Services
         </h1>
+        <div className="hidden lg:flex justify-center sticky top-[100px] mt-6 lg:mb-15">
+          <motion.img
+            src={service}
+            alt="Illustrator"
+            initial={{ opacity: 0, y: 300 }}
+            animate={{ opacity: 1, y: 300 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className=" xl:w-[60%] lg:w-[70%] 2xl:w-[50%] h-auto object-cover rounded-[2rem] md:rounded-[4rem] transition-transform duration-500"
+          />
+        </div>
       </div>
       {/* Services Section */}
       {/* About Us Content */}
-      <div className="font-sans min-h-screen bg-black">
+      <div className="font-sans h-fit bg-black">
         {/* Header */}
-        <div className="px-6 md:px-10 lg:px-20 py-10">
-          <button className="ml-30 border border-white w-fit p-3 rounded-2xl mb-4">
+        <div className="px-6 md:px-10 lg:px-20  py-10">
+          <button className="ml-30 border md:ml-70 xl:ml-60 lg:ml-50 border-white w-fit p-3 rounded-2xl mb-4">
             <p className="text-white font-['Syne',_sans-serif]">SERVICES</p>
           </button>
           <motion.div
@@ -329,7 +338,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 50 }}
             animate={isHeadingInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6 }}
-            className="text-2xl md:text-3xl text-white font-semibold leading-tight font-['Syne',_sans-serif]"
+            className="text-2xl md:text-3xl md:ml-30 xl:ml-20  lg:ml-10 text-white font-semibold leading-tight font-['Syne',_sans-serif]"
           >
             {isHeadingInView && (
               <>
@@ -365,7 +374,7 @@ const HeroSection = () => {
         {/* Main Content */}
         <div className="flex flex-col-reverse lg:flex-row w-full max-w-7xl mx-auto px-6 md:px-10 lg:px-20 items-center">
           {/* Left - Text + Circle Services */}
-          <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-start text-white font-['Syne',_sans-serif]">
+          <div className="w-full 2xl: lg:w-1/2 xl:ml-23 2xl:ml-1 flex flex-col lg:ml-10 items-center lg:items-start text-white font-['Syne',_sans-serif]">
             <div
               ref={circleServicesRef}
               className="relative   w-[300px] h-[300px] md:w-[400px] md:h-[400px] flex items-center justify-center mb-10"
@@ -406,7 +415,21 @@ const HeroSection = () => {
                       alt={service.title}
                       className="w-full h-full  object-cover rounded-full"
                     />
-                    <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-80 transition-opacity duration-300 rounded-full flex items-center justify-center p-4">
+                    <div
+                      className={`
+    absolute inset-0 
+    bg-black/80  /* semi-transparent black background only */
+    rounded-full flex items-center justify-center p-4
+    transition-opacity duration-300 
+    ${
+      window.innerWidth < 1024
+        ? isInView
+          ? "opacity-100"
+          : "opacity-0"
+        : "opacity-0 lg:group-hover:opacity-100"
+    }
+  `}
+                    >
                       <p className="text-white font-semibold text-xs md:text-sm">
                         {service.title}
                       </p>
@@ -415,34 +438,53 @@ const HeroSection = () => {
                 );
               })}
             </div>
-            <button className="text-sm p-3 mb-15  md:text-base md:px-5  md:py-2 lg:text-xl lg:p-3 lg:ml-30 border bg-white text-black border-white rounded-3xl  hover:bg-white hover:text-black transition">
-              <Link to="/services">View More {">"}</Link>
+            <button
+              className="text-sm p-3 mb-15 md:text-base md:px-5 md:py-2 lg:ml-30 lg:text-xl border bg-white text-black border-white rounded-3xl hover:bg-white hover:text-black transition cursor-pointer pointer-events-auto z-50"
+              onClick={() => (window.location.href = "/services")}
+            >
+              View More {">"}
             </button>
           </div>
 
           {/* Right - Image */}
-          <div className="w-full lg:w-1/2 flex justify-center mb-10 lg:mb-0">
-            <img
+          {/* Right - Image */}
+          <div className="relative w-full lg:w-1/2 flex justify-center mb-10 lg:mb-0"></div>
+          <div className="block lg:hidden mt-6">
+            <motion.img
               src={service}
               alt="Illustrator"
-              className="w-[70%]  md:w-[55%] lg:w-[70%] h-auto  object-cover rounded-[2rem] md:rounded-[4rem] lg:-translate-y-[350px]"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="w-[90%] ml-5 md:py-5 md:w-[55%] md:ml-40 h-auto object-cover rounded-[2rem] md:rounded-[4rem] transition-transform duration-500"
             />
           </div>
         </div>
       </div>
       <div
         ref={ref}
-        className="h-50 flex justify-end px-10 bg-white items-center font-['Syne',_sans-serif]"
+        className="h-60 whitespace-nowrap flex flex-row-reverse justify-between w-full px-10 bg-white items-center font-['Syne',_sans-serif]"
       >
         <h1
-          className={`text-7xl font-extrabold transition-all duration-1000 transform ${
+          className={`text-6xl lg:text-7xl md:text-6xl font-extrabold transition-all duration-1000 transform ${
             inView ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"
           }`}
         >
           About Us
         </h1>
+        <div className="hidden lg:flex justify-center sticky top-[100px] mt-6 lg:mb-15 ">
+          <motion.img
+            src={img6}
+            alt="Illustrator"
+            initial={{ opacity: 0, y: 300 }}
+            animate={{ opacity: 1, y: 300 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="w-[37%] mr-80 lg:w-[48%] lg:ml-10 xl:w-[44%] 2xl:w-[40%]  h-auto object-cover rounded-[2rem] md:rounded-[4rem] transition-transform duration-500"
+          />
+        </div>
       </div>
-      <div className="font-sans min-h-screen bg-black">
+
+      <div className="font-sans h-fit bg-black">
         {/* About Us Content */}
         <div className="relative h-fit flex items-center justify-center">
           {/* Main container */}
@@ -487,16 +529,16 @@ const HeroSection = () => {
                   )}
                 </motion.div>
               </div>
-              <div className="relative mt-10 md:w-1/2 flex items-center  justify-center">
+              <div className="relative mt-10 md:w-1/2  flex items-center justify-center block lg:hidden">
                 <img
                   src={img6}
                   alt="Illustrator"
-                  className="w-[80%]  md:w-[85%] md:ml-100 lg:mr-100 lg:w-[70%] h-auto  object-cover rounded-[2rem] md:rounded-[4rem] lg:-translate-y-[350px]"
+                  className="w-[80%]  md:w-[85%] md:py-5 md:ml-100 lg:mr-100 lg:w-[70%] h-auto object-cover rounded-[3rem] md:rounded-[4rem] lg:-translate-y-[350px]"
                 />
               </div>
 
               {/* Wrapper for Paragraph + Icons + Button */}
-              <div className="flex flex-col px-6 md:px-30 mt-5 gap-6 lg:ml-[480px] lg:-mt-[600px]">
+              <div className="flex flex-col px-6 md:px-30 mt-5 gap-6 lg:ml-[480px] lg:-mt-[-30px]">
                 <p className="font-normal text-lg max-w-3xl leading-relaxed">
                   At Anasol Consultancy, we are dedicated to delivering tailored
                   consultancy services that drive efficiency and growth. With a
@@ -507,7 +549,7 @@ const HeroSection = () => {
                   but exceed your expectations.
                 </p>
 
-                <div className="flex gap-8 flex-col lg:gap-10 md:flex-row   md:gap-20 items-start md:items-center">
+                <div className="flex gap-8 flex-col lg:gap-10 md:flex-row md:py-10  md:gap-30 items-start md:items-center">
                   <div className="flex items-center gap-2">
                     <IoSettingsOutline size={40} />
                     <div>
@@ -519,11 +561,7 @@ const HeroSection = () => {
                         your needs.
                       </p>
                     </div>
-                  </div>
-
-                  <button className="text-sm hover:cursor-pointer p-2 md:text-base md:px-5 md:py-2 lg:text-lg lg:p-3 border bg-white text-black border-white rounded-3xl hover:bg-white hover:text-black transition whitespace-nowrap">
-                    <Link to="/about"> View More {">"}</Link>
-                  </button>
+                  </div>{" "}
                 </div>
               </div>
             </div>
@@ -581,19 +619,30 @@ const HeroSection = () => {
       </div>
       <div
         ref={whyChooseRef}
-        className="h-80 flex px-10 bg-white items-center font-['Syne',_sans-serif]"
+        className="h-60 whitespace-nowrap flex flex-row-reverse justify-between w-full px-10 bg-white items-center font-['Syne',_sans-serif]"
       >
         <h1
-          className={`text-7xl font-extrabold mr-30 transition-all duration-1000 transform ${
+          className={`text-5xl whitespace-break-spaces lg:text-7xl lg:whitespace-nowrap md:text-6xl md:whitespace-nowrap font-extrabold transition-all duration-1000 transform ${
             whyChooseInView
               ? "opacity-100 translate-x-0"
-              : "opacity-0 -translate-x-10"
+              : "opacity-0 translate-x-10"
           }`}
         >
           Why Choose Us
         </h1>
+        <div className="hidden lg:flex justify-center sticky top-[100px] mt-20 lg:mb-20 ">
+          <motion.img
+            src={why}
+            alt="Illustrator"
+            initial={{ opacity: 0, y: 300 }}
+            animate={{ opacity: 1, y: 300 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="w-[45%] xl:w-[60%] lg:w-[70%] lg:ml-20  2xl:w-[50%] mr-30  h-auto object-cover rounded-[2rem] md:rounded-[4rem] transition-transform duration-500"
+          />
+        </div>
       </div>
-      <div className="font-sans min-h-screen bg-black">
+
+      <div className="font-sans h-fit bg-black">
         {/* About Us Content */}
         <div className="relative h-fit flex items-center justify-center">
           {/* Main container */}
@@ -605,7 +654,7 @@ const HeroSection = () => {
               {/* Wrapper for About button + Heading */}
               <div className="flex flex-col px-6 md:px-30">
                 <button>
-                  <span className="text-white border border-white py-2 px-4 rounded-2xl lg:ml-50">
+                  <span className="text-white border border-white py-2 px-4 rounded-2xl lg:ml-100">
                     Why Choose Us
                   </span>
                 </button>
@@ -618,7 +667,7 @@ const HeroSection = () => {
                   className="md:ml-20 lg:ml-[130px] pt-5"
                 >
                   {isMissionInView && (
-                    <h1 className="text-2xl md:text-3xl lg:text-4xl lg:ml-100 font-semibold leading-tight whitespace-nowrap">
+                    <h1 className="text-2xl md:text-3xl lg:text-4xl lg:ml-70 font-semibold leading-tight whitespace-nowrap">
                       <TypeAnimation
                         sequence={["Your Goals. Our Expertise. ", 1000]}
                         speed={60}
@@ -638,16 +687,16 @@ const HeroSection = () => {
                   )}
                 </motion.div>
               </div>
-              <div className="relative py-10  md:w-1/2 flex items-center justify-center">
+              <div className="relative mt-10 md:w-1/2 flex items-center justify-center block lg:hidden">
                 <img
                   src={why}
                   alt="Illustrator"
-                  className="w-[80%]  md:w-[80%] lg:w-[75%] lg:h-[85%] lg:mr-110 md:ml-100 lg:mb-10    object-cover rounded-[2rem] md:rounded-[4rem] lg:-translate-y-[350px]"
+                  className="w-[80%] md:w-[85%] md:py-5 md:ml-100 lg:mr-100 lg:w-[70%] h-auto object-cover rounded-[3rem] md:rounded-[4rem] lg:-translate-y-[350px]"
                 />
               </div>
 
               {/* Wrapper for Paragraph + Icons + Button */}
-              <div className="flex flex-col px-6 md:px-30 mt-5 gap-6 lg:ml-[500px] lg:-mt-[800px]">
+              <div className="flex flex-col px-6 md:px-30 mt-5 gap-6 lg:ml-[400px] lg:-mt-[-10px]">
                 <p className="p-5 text-lg max-w-2xl leading-relaxed">
                   Professionals of the industry with an abundance of knowledge
                   and expertise make up our team. We customize our services to

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import  { useState, useEffect, useRef } from "react";
 import { Check, ChevronRight, ArrowRight } from "lucide-react";
 import heroImage from "../assets/bgit.png";
 import img from "../assets/itMain.jpg";

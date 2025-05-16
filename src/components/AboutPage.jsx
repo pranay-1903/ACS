@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import  { useEffect, useState, useRef } from "react";
 import AboutImage from "../assets/data-solutions.png";
 import TestimonialImage from "../assets/about.png";
 import Image from "../assets/bg.png";
@@ -11,6 +11,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useInView } from "react-intersection-observer";
 import { motion } from "framer-motion";
+import { Link,useNavigate } from "react-router-dom";
 
 const Counter = ({ target }) => {
   const [count, setCount] = useState(0);
@@ -65,6 +66,8 @@ const About = () => {
     return () => clearTimeout(timer);
   }, []);
 
+   const navigate = useNavigate();
+
   return (
     <div className="bg-white text-gray-800 font-['Syne',_sans-serif] w-full ">
       {/* Banner */}
@@ -86,7 +89,14 @@ const About = () => {
               isVisible ? "opacity-100" : "opacity-0"
             }`}
           >
-            <span>Home</span>
+            <Link to="/">
+              <span
+              onClick={() => navigate("/")}
+              className="cursor-pointer text-white hover:text-blue-500 transition-colors duration-300"
+            >
+              Home
+            </span>
+            </Link>
             <span className="mx-2">/</span>
             <span>About Us</span>
           </div>

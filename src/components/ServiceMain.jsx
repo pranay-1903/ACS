@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import  { useState, useEffect } from "react";
+import { Link,useNavigate } from "react-router-dom";
 import heroImage from "../assets/bg5.png";
 import bg1 from "../assets/s1.png";
 import bg2 from "../assets/s2.png";
@@ -25,6 +25,7 @@ import AnimatedBlock from "./AnimatedBlock";
 import why from "../assets/why.png";
 import { useInView } from "react-intersection-observer";
 import { IoSettingsOutline } from "react-icons/io5";
+
 
 const serviceData = [
   {
@@ -119,6 +120,8 @@ const ServiceMain = () => {
     threshold: 0.4,
   });
 
+  const navigate = useNavigate();
+
   return (
     <div className="font-['Syne',_sans-serif]">
       <div
@@ -140,7 +143,12 @@ const ServiceMain = () => {
             }`}
           >
             <Link to="/">
-              <span>Home</span>
+              <span
+              onClick={() => navigate("/")}
+              className="cursor-pointer text-white hover:text-blue-500 transition-colors duration-300"
+            >
+              Home
+            </span>
             </Link>           <span className="mx-2">/</span>{" "}
             <span className="font-['Syne',_sans-serif]">Services</span>
           </div>

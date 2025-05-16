@@ -1,5 +1,5 @@
 // Carrers.jsx
-import React, { useState, useRef, useEffect } from "react";
+import  { useState, useRef, useEffect } from "react";
 import Image from "../assets/image3.png";
 import {
   Briefcase,
@@ -14,6 +14,7 @@ import {
   Upload,
 } from "lucide-react";
 import { PiGraduationCapDuotone } from "react-icons/pi";
+import { Link,useNavigate } from "react-router-dom";
 
 const members = [
   {
@@ -136,6 +137,8 @@ const Carrers = () => {
   }, 3000);
   };
 
+  const navigate = useNavigate();
+
   return (
     <div className="w-full font-['Syne',_sans-serif]">
       {/* Hero Section */}
@@ -157,7 +160,14 @@ const Carrers = () => {
               isVisible ? "opacity-100" : "opacity-0"
             }`}
           >
-            Home / Careers
+            <Link to="/">
+              <span
+              onClick={() => navigate("/")}
+              className="cursor-pointer text-white hover:text-blue-500 transition-colors duration-300"
+            >
+              Home
+            </span>
+            </Link> / Careers
           </div>
         </div>
       </div>
