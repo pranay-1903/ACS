@@ -1,4 +1,4 @@
-import  { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import AboutImage from "../assets/data-solutions.png";
 import TestimonialImage from "../assets/about.png";
 import Image from "../assets/bg.png";
@@ -11,7 +11,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useInView } from "react-intersection-observer";
 import { motion } from "framer-motion";
-import { Link,useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { FaBriefcase } from 'react-icons/fa';
 
 const Counter = ({ target }) => {
   const [count, setCount] = useState(0);
@@ -56,6 +57,7 @@ const Counter = ({ target }) => {
   );
 };
 
+
 const About = () => {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.2 });
   const [isVisible, setIsVisible] = useState(false);
@@ -65,14 +67,13 @@ const About = () => {
     const timer = setTimeout(() => setIsVisible(true), 100);
     return () => clearTimeout(timer);
   }, []);
-
-   const navigate = useNavigate();
+  const navigate = useNavigate();
 
   return (
     <div className="bg-white text-gray-800 font-['Syne',_sans-serif] w-full ">
       {/* Banner */}
       <div
-        className="relative w-full h-[60vh] md:h-screen bg-cover bg-top"
+        className="relative w-full h-screen md:h-screen bg-cover bg-top"
         style={{ backgroundImage: `url(${Image})` }}
       >
         <div className="absolute inset-0 bg-black/40"></div>
@@ -89,16 +90,19 @@ const About = () => {
               isVisible ? "opacity-100" : "opacity-0"
             }`}
           >
-            <Link to="/">
-              <span
-              onClick={() => navigate("/")}
-              className="cursor-pointer text-white hover:text-blue-500 transition-colors duration-300"
-            >
-              Home
-            </span>
-            </Link>
-            <span className="mx-2">/</span>
-            <span>About Us</span>
+            <span
+          onClick={() => navigate("/")}
+          className="cursor-pointer text-white hover:text-blue-500 transition-colors duration-300"
+        >
+          Home
+        </span>
+        <span className="mx-2">/</span>
+        <span
+          onClick={() => navigate("/contact")}
+          className="font-['Syne',_sans-serif] cursor-pointer text-white hover:text-blue-500 transition-colors duration-300"
+        >
+          About
+        </span>
           </div>
         </div>
       </div>
@@ -126,15 +130,35 @@ const About = () => {
           </p>
 
           <div className="flex gap-10 mb-6">
-            <div>
-              <Counter target={30} />
-              <p className="text-gray-500 text-sm">Million Users</p>
-            </div>
-            <div>
-              <Counter target={15} />
-              <p className="text-gray-500 text-sm">Award Winning</p>
-            </div>
-          </div>
+         
+          <div className="bg-gray-100  rounded-xl p-6 shadow-md max-w-xl mx-auto">
+      <div
+       
+        className="cursor-pointer flex items-center mb-4"
+      >
+        <div className="text-black-600 text-4xl mr-6">
+          <FaBriefcase />
+        </div>
+        <div>
+          <h3 className="text-xl font-semibold">Best Services</h3>
+          <p className="text-gray-600">
+            Explore our expert solutions designed to drive your business success.
+          </p>
+        </div>
+      </div>
+
+      <button
+        onClick={() => navigate("/services")}
+        className="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition"
+        
+      >
+        Explore Now
+       
+      </button>
+    </div>
+     
+        
+        </div>
         </div>
 
         <div

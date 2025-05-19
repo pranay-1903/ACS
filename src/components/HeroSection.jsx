@@ -25,8 +25,6 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { useInView } from "react-intersection-observer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { motion, useAnimation } from "framer-motion";
-import { FaCircleChevronUp } from "react-icons/fa6";
-import { FaCloudUploadAlt } from "react-icons/fa";
 
 import {
   faProjectDiagram,
@@ -41,7 +39,6 @@ const HeroSection = () => {
   const circleServicesRef = useRef(null);
   const [textAnimationDone, setTextAnimationDone] = useState(false);
 
-  const [animationTriggered, setAnimationTriggered] = useState(false);
   const { ref: headingRef, inView: isHeadingInView } = useInView({
     triggerOnce: true,
   });
@@ -123,20 +120,6 @@ const HeroSection = () => {
     };
   }, []);
 
-  const [showButton, setShowButton] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setShowButton(window.scrollY > 300);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
 
   const Counter = ({ target }) => {
     const [count, setCount] = useState(0);
@@ -561,7 +544,11 @@ const HeroSection = () => {
                         your needs.
                       </p>
                     </div>
-                  </div>{" "}
+                  </div>
+                  
+                  <button className="text-sm hover:cursor-pointer p-2 md:text-base md:px-5 md:py-2 lg:text-lg lg:p-3 border bg-white text-black border-white rounded-3xl hover:bg-white hover:text-black transition whitespace-nowrap">
+                    <Link to="/about"> View More {">"}</Link>
+                  </button>
                 </div>
               </div>
             </div>
@@ -754,15 +741,6 @@ const HeroSection = () => {
           </div>
         </div>
       </div>
-
-      {showButton && (
-        <button
-          onClick={scrollToTop}
-          className="fixed bottom-10 right-10 bg-white text-black rounded-full shadow-md hover:bg-[#e5e5e5] cursor-pointer transition z-50"
-        >
-          <FaCircleChevronUp size={45} />
-        </button>
-      )}
     </div>
   );
 };

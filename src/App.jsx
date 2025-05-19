@@ -9,6 +9,7 @@ import About from "./components/AboutPage";
 import Carrers from "./components/Careers";
 import Contact from "./components/Contact";
 import ScrollTop from "./components/ScrollToTop";
+import TopScroll from "./components/TopScroll";
 function App() {
   return (
     <Router>
@@ -25,6 +26,7 @@ function App() {
         <Route path="/carrers" element={<Carrers />} />
         <Route path="/contact" element={<Contact />} />
       </Routes>
+      <TopScroll/>
       <Footer />
     </Router>
   );

@@ -26,7 +26,7 @@ const ConnectSection = () => {
     <div className="font-['Syne',_sans-serif]">
       {/* Header Section */}
       <div
-        className="relative w-full h-[60vh] md:h-screen bg-cover bg-top"
+        className="relative w-full h-screen md:h-screen bg-cover bg-top"
         style={{ backgroundImage: `url(${Image})` }}
       >
         <div className="absolute inset-0 bg-black/40"></div>

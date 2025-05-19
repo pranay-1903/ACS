@@ -16,11 +16,17 @@ import {
 import { PiGraduationCapDuotone } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
 
-const res = await fetch(
-  "https://86uwf9gt5m.execute-api.us-east-1.amazonaws.com/fetchjobs"
-);
-const result = await res.json();
-const members = result.body;
+let members = [];
+
+(async () => {
+  try {
+    const res = await fetch("https://86uwf9gt5m.execute-api.us-east-1.amazonaws.com/fetchjobs");
+    const result = await res.json();
+    members = result.body || [];
+  } catch (error) {
+    console.error("Error fetching jobs:", error);
+  }
+})();
 
 const Carrers = () => {
   const [minExperience, setMinExperience] = useState("");
@@ -152,9 +158,9 @@ const Carrers = () => {
 
   return (
     <div className="w-full font-['Syne',_sans-serif]">
-      {/* Hero Section */}
+     
       <div
-        className="w-full h-[60vh] md:h-screen bg-cover bg-center relative"
+        className="w-full h-screen bg-cover bg-center relative"
         style={{ backgroundImage: `url(${Image})` }}
       >
         <div className="absolute inset-0 bg-black/50" />
@@ -244,12 +250,12 @@ const Carrers = () => {
           )}
 
           {/* Experience Dropdown */}
-          <div className="relative w-full max-w-xs mt-2">
+          <div className="relative ">
             <Clock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black w-5 h-5" />
             <select
               value={minExperience}
               onChange={(e) => setMinExperience(e.target.value)}
-              className="pl-10 pr-4 w-full border border-gray-300 rounded-md py-2 bg-white text-sm sm:text-base"
+              className="pl-10 border border-gray-300 rounded px-4 py-2 w-full cursor-pointer"
             >
               <option value="">Min Experience</option>
               {[0, 1, 2, 3, 4, 5].map((val) => (
@@ -261,15 +267,15 @@ const Carrers = () => {
           </div>
 
           {/* Job Type Dropdown */}
-          <div className="relative">
-            <Globe className="absolute top-3 left-3 w-5 h-5" />
+          <div className="relative ">
+            <Globe className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black w-5 h-5" />
             <input
               type="text"
               value={jobType}
               placeholder="Job Type"
               readOnly
               onClick={() => setShowJobTypeOptions(!showJobTypeOptions)}
-              className="pl-10 border border-gray-300 rounded px-4 py-2 w-full cursor-pointer"
+              className="pl-10 placeholder-black border border-gray-300 text-black rounded px-4 py-2 w-full cursor-pointer"
             />
             {showJobTypeOptions && (
               <div className="absolute bg-white border border-gray-300 rounded mt-1 w-full shadow z-10">
