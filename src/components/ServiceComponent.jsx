@@ -99,7 +99,7 @@ const ServiceComponent = () => {
   const navigate = useNavigate();
 
   return (
-    <div>
+    <div className="overflow-y-hidden">
       <style>
         {`
           @keyframes fadeInUp {
@@ -173,7 +173,7 @@ const ServiceComponent = () => {
       </style>
 
       <div
-        className="relative w-full h-[50vh] bg-cover bg-top"
+        className="relative w-full h-[50vh] bg-cover bg-top "
         style={{ backgroundImage: `url(${heroImage})`, imageRendering: "auto" }}
       >
         <div className="absolute inset-0 bg-black/40"></div>
@@ -214,7 +214,7 @@ const ServiceComponent = () => {
 
       </div>
 
-      <div className="flex justify-center sm:p-15 lg:p-19 pt-10 font-['Syne',_sans-serif] bg-white">
+      <div className="flex justify-center sm:p-15 lg:p-19 pt-10 font-['Syne',_sans-serif] bg-white ">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-11 p-6">
           <div className="lg:col-span-2 order-2 lg:order-1">
             {/* Title and Description */}

@@ -1,5 +1,6 @@
-import  { useState, useEffect } from "react";
+import  { useState, useEffect,useRef  } from "react";
 import { Link,useNavigate } from "react-router-dom";
+import { TypeAnimation } from "react-type-animation";
 import heroImage from "../assets/bg5.png";
 import bg1 from "../assets/s1.png";
 import bg2 from "../assets/s2.png";
@@ -25,6 +26,7 @@ import AnimatedBlock from "./AnimatedBlock";
 import why from "../assets/why.png";
 import { useInView } from "react-intersection-observer";
 import { IoSettingsOutline } from "react-icons/io5";
+import { motion, useAnimation } from "framer-motion";
 
 
 const serviceData = [
@@ -120,6 +122,9 @@ const ServiceMain = () => {
     threshold: 0.4,
   });
 
+    const { ref: missionRef, inView: isMissionInView } = useInView({
+      triggerOnce: true,
+    });
   const navigate = useNavigate();
 
   return (
@@ -176,21 +181,32 @@ const ServiceMain = () => {
         </div>
       </div>
 
-      <div
+            <div
         ref={whyChooseRef}
-        className="h-80 flex px-10 bg-white items-center font-['Syne',_sans-serif]"
+        className="h-60 whitespace-nowrap flex flex-row-reverse justify-between w-full px-10 bg-white items-center font-['Syne',_sans-serif]"
       >
         <h1
-          className={`text-7xl font-extrabold mr-30 transition-all duration-1000 transform ${
+          className={`text-5xl whitespace-break-spaces lg:text-7xl lg:whitespace-nowrap md:text-6xl md:whitespace-nowrap font-extrabold transition-all duration-1000 transform ${
             whyChooseInView
               ? "opacity-100 translate-x-0"
-              : "opacity-0 -translate-x-10"
+              : "opacity-0 translate-x-10"
           }`}
         >
           Why Choose Us
         </h1>
+        <div className="hidden lg:flex justify-center sticky top-[100px] mt-20 lg:mb-20 ">
+          <motion.img
+            src={why}
+            alt="Illustrator"
+            initial={{ opacity: 0, y: 300 }}
+            animate={{ opacity: 1, y: 300 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="w-[45%] xl:w-[60%] lg:w-[70%] lg:ml-20  2xl:w-[50%] mr-30  h-auto object-cover rounded-[2rem] md:rounded-[4rem] transition-transform duration-500"
+          />
+        </div>
       </div>
-      <div className="font-sans min-h-screen bg-black">
+
+      <div className="font-sans h-fit bg-black">
         {/* About Us Content */}
         <div className="relative h-fit flex items-center justify-center">
           {/* Main container */}
@@ -202,27 +218,49 @@ const ServiceMain = () => {
               {/* Wrapper for About button + Heading */}
               <div className="flex flex-col px-6 md:px-30">
                 <button>
-                  <span className="text-white border border-white py-2 px-4 rounded-2xl lg:ml-50">
+                  <span className="text-white border border-white py-2 px-4 rounded-2xl lg:ml-100">
                     Why Choose Us
                   </span>
                 </button>
 
-                <h1 className="text-2xl pt-5 md:ml-20 md:text-3xl lg:text-4xl lg:ml-130 font-semibold leading-tight whitespace-nowrap">
-                  <span>Your Goals. Our Expertise. </span>
-                  <br />
-                  <span>One Mission</span>
-                </h1>
+                <motion.div
+                  ref={missionRef}
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={isMissionInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.6 }}
+                  className="md:ml-20 lg:ml-[130px] pt-5"
+                >
+                  {isMissionInView && (
+                    <h1 className="text-2xl md:text-3xl lg:text-4xl lg:ml-70 font-semibold leading-tight whitespace-nowrap">
+                      <TypeAnimation
+                        sequence={["Your Goals. Our Expertise. ", 1000]}
+                        speed={60}
+                        wrapper="span"
+                        cursor={false}
+                        className="block"
+                      />
+                      <TypeAnimation
+                        sequence={["One Mission"]}
+                        speed={60}
+                        wrapper="span"
+                        className="block"
+                        cursor={false}
+                        onTypingDone={() => setIsTypingDone(true)}
+                      />
+                    </h1>
+                  )}
+                </motion.div>
               </div>
-              <div className="relative py-10  md:w-1/2 flex items-center justify-center">
+              <div className="relative mt-10 md:w-1/2 flex items-center justify-center block lg:hidden">
                 <img
                   src={why}
                   alt="Illustrator"
-                  className="w-[80%]  md:w-[80%] lg:w-[75%] lg:h-[85%] lg:mr-110 md:ml-100 lg:mb-10    object-cover rounded-[2rem] md:rounded-[4rem] lg:-translate-y-[350px]"
+                  className="w-[80%] md:w-[85%] md:py-5 md:ml-100 lg:mr-100 lg:w-[70%] h-auto object-cover rounded-[3rem] md:rounded-[4rem] lg:-translate-y-[350px]"
                 />
               </div>
 
               {/* Wrapper for Paragraph + Icons + Button */}
-              <div className="flex flex-col px-6 md:px-30 mt-5 gap-6 lg:ml-[500px] lg:-mt-[800px]">
+              <div className="flex flex-col px-6 md:px-30 mt-5 gap-6 lg:ml-[400px] lg:-mt-[-10px]">
                 <p className="p-5 text-lg max-w-2xl leading-relaxed">
                   Professionals of the industry with an abundance of knowledge
                   and expertise make up our team. We customize our services to
